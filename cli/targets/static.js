@@ -662,7 +662,7 @@ function buildService(ref, service) {
         ]);
         push(escapeName(service.name) + ".prototype" + util.safeProp(lcName) + " = function " + escapeName(lcName) + "(request, callback) {");
             ++indent;
-            push((config.es6 ? "const" : "var") + " method = " + escapeName(service.name) + ".CLASS_TYPE + \"/" + method.name + "\"";);
+            push((config.es6 ? "const" : "var") + " method = " + escapeName(service.name) + ".CLASS_TYPE + \"" + method.name + "\";");
             push("return this.rpcCall(" + escapeName(lcName) + ", $root." + exportName(method.resolvedRequestType) + ", $root." + exportName(method.resolvedResponseType) + ", request, callback);");
             --indent;
         push("};");
