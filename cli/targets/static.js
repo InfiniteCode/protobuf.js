@@ -644,23 +644,6 @@ function buildService(ref, service) {
     ]);
     push(escapeName(service.name) + ".prototype.CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
 
-
-
-    pushComment([
-        "@memberof " + exportName(service.name),
-        "@function CLASS_TYPE",
-        "@static",
-        "@returns {string}"
-    ]);
-    push(escapeName(service.name) + ".CLASS_TYPE = function CLASS_TYPE() {");
-        ++indent;
-        push("return \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
-        --indent;
-    push("};");
-
-
-
-
     service.methodsArray.forEach(function(method) {
         method.resolve();
         var lcName = protobuf.util.lcFirst(method.name),
