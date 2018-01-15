@@ -648,13 +648,13 @@ function buildService(ref, service) {
     push("");
     pushComment([
         "@function CLASS_TYPE2",
-        "@memberof " + exportName(service.name),
+        "@memberof " + exportName(service),
         "@static",
         "@returns {string}"
     ]);
     push(escapeName(service.name) + ".CLASS_TYPE2 = function CLASS_TYPE2() {");
         ++indent;
-        push("return \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
+        push("return " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
         --indent;
     push("};");
 
