@@ -644,11 +644,20 @@ function buildService(ref, service) {
     ]);
     push(escapeName(service.name) + ".prototype.CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
 
+
     push("");
     pushComment([
-        "@type {string}"
+        "@function getClassType",
+        "@memberof " + exportName(service),
+        "@static",
+        "@returns {string}"
     ]);
-    push(escapeName(service.name) + ".CLASS_TYPE = " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
+    push(escapeName(service.name) + ".getClassType = function getClassType() {");
+        ++indent;
+        push("return " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
+        --indent;
+    push("};");
+
 
     service.methodsArray.forEach(function(method) {
         method.resolve();
