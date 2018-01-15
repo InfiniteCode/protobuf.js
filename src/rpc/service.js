@@ -76,14 +76,14 @@ function Service(rpcImpl, requestDelimited, responseDelimited) {
  * @template TReq extends Message<TReq>
  * @template TRes extends Message<TRes>
  */
-Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, request, callback, methodName) {
+Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, request, methodName, callback) {
 
     if (!request)
         throw TypeError("request must be specified");
 
     var self = this;
     if (!callback)
-        return util.asPromise(rpcCall, self, method, requestCtor, responseCtor, request, callback, methodName);
+        return util.asPromise(rpcCall, self, method, requestCtor, responseCtor, request, methodName);
 
     if (!self.rpcImpl) {
         setTimeout(function() { callback(Error("already ended")); }, 0);
