@@ -631,8 +631,7 @@ function buildService(ref, service) {
     push("");
     pushComment([
         "Fully qualified class name, including parent namespaces and self.",
-        "@type {string}",
-        "@static"
+        "@const {string}"
     ]);
     push(escapeName(service.name) + ".prototype.CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
 
@@ -663,6 +662,7 @@ function buildService(ref, service) {
         ]);
         push(escapeName(service.name) + ".prototype" + util.safeProp(lcName) + " = function " + escapeName(lcName) + "(request, callback) {");
             ++indent;
+            push((config.es6 ? "const" : "var") + " method = " + escapeName(service.name) + ".CLASS_TYPE + \"/" + method.name + "\"";);
             push("return this.rpcCall(" + escapeName(lcName) + ", $root." + exportName(method.resolvedRequestType) + ", $root." + exportName(method.resolvedResponseType) + ", request, callback);");
             --indent;
         push("};");
