@@ -680,7 +680,7 @@ function buildService(ref, service) {
             ++indent;
             push((config.es6 ? "const" : "var") + " methodName = " + escapeName(service.name) + ".prototype.CLASS_TYPE + \"/" + method.name + "\";");
             push("return this.rpcCall(" + escapeName(lcName) + ", $root." + exportName(method.resolvedRequestType) + ", $root."
-                + exportName(method.resolvedResponseType) + ", request, callback, methodName);");
+                + exportName(method.resolvedResponseType) + ", request, methodName, callback);");
             --indent;
         push("};");
         if (config.comments)
