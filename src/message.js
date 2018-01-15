@@ -132,7 +132,7 @@ Message.toObject = function toObject(message, options) {
  * Returns class type that was generated, if any.
  * @returns {string}
  */
-Message.getClassType = function getClassType() {
+Message.prototype.getClassType = function getClassType() {
     return this.CLASS_TYPE;
 };
 

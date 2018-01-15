@@ -570,7 +570,7 @@ export class Message<T extends object> {
      * Returns class name for the generated type
      * @returns string
      */
-    public static getClassType(): string;
+    public getClassType(): string;
 
     /**
      * Converts this message to JSON.
