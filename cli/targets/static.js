@@ -659,31 +659,22 @@ function buildService(ref, service) {
     push("};");
 
 
+
+
+
     push("");
     pushComment([
-        "@type {string}",
         "@memberof " + exportName(service),
-        "@static",
-        "@returns {string}"
+        "@static"
     ]);
-    push(escapeName(service.name) + ".CLASS_TYPE2 = function CLASS_TYPE2() {");
-        ++indent;
-        push("return " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
-        --indent;
-    push("};");
+    push("get: " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
 
-    pushComment([
-        "@type {string}",
-        "@memberof " + exportName(service),
-        "@static",
-        "@returns {string}"
-    ]);
-    push("static get CLASS_GETTER() {");
-        ++indent;
-        push("return " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
-        --indent;
-    push("};");
+
     
+
+
+
+
 
     service.methodsArray.forEach(function(method) {
         method.resolve();
