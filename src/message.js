@@ -129,6 +129,14 @@ Message.toObject = function toObject(message, options) {
 };
 
 /**
+ * Returns class type that was generated, if any.
+ * @returns {string}
+ */
+Message.getClassType = function getClassType() {
+    return this.CLASS_TYPE;
+};
+
+/**
  * Converts this message to JSON.
  * @returns {Object.<string,*>} JSON object
  */

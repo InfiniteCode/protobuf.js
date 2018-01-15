@@ -567,6 +567,12 @@ export class Message<T extends object> {
     public static toObject<T extends Message<T>>(this: Constructor<T>, message: T, options?: IConversionOptions): { [k: string]: any };
 
     /**
+     * Returns class name for the generated type
+     * @returns string
+     */
+    public static getClassType(): string;
+
+    /**
      * Converts this message to JSON.
      * @returns JSON object
      */
