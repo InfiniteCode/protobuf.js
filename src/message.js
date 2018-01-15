@@ -133,7 +133,7 @@ Message.toObject = function toObject(message, options) {
  * @returns {string}
  */
 Message.prototype.getClassType = function getClassType() {
-    return this.CLASS_TYPE;
+    return this.prototype.CLASS_TYPE;
 };
 
 /**

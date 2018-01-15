@@ -95,29 +95,38 @@ Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, 
             method,
             request,
             requestCtor[self.requestDelimited ? "encodeDelimited" : "encode"](request).finish(),
-            function rpcCallback(err, response) {
-
+            function rpcCallback(err, response, responseBinary) {
                 if (err) {
                     self.emit("error", err, method);
                     return callback(err);
                 }
 
-                if (response === null) {
+                if (response === null && responseBinary === null) {
                     self.end(/* endedByRPC */ true);
                     return undefined;
                 }
 
-                if (!(response instanceof responseCtor)) {
-                    try {
-                        response = responseCtor[self.responseDelimited ? "decodeDelimited" : "decode"](response);
-                    } catch (err) {
-                        self.emit("error", err, method);
-                        return callback(err);
-                    }
+                var method
+
+                if (response && !(response instanceof responseCtor)) {
+                    method = responseCtor["fromObject"]
                 }
 
-                self.emit("data", response, method);
-                return callback(null, response);
+                if (responseBinary && !(responseBinary instanceof responseCtor)) {
+                    method = responseCtor[self.responseDelimited ? "decodeDelimited" : "decode"]
+                }
+
+                var resp
+
+                try {
+                    resp = method(responseBinary || response);
+                } catch (err) {
+                    self.emit("error", err, method);
+                    return callback(err);
+                }
+
+                self.emit("data", resp, method);
+                return callback(null, resp);
             },
             methodName
         );
