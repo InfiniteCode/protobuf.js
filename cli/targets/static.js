@@ -643,38 +643,13 @@ function buildService(ref, service) {
         "@static"
     ]);
     push(escapeName(service.name) + ".prototype.CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
-
-
-    push("");
-    pushComment([
-        "@function CLASS_TYPE2",
-        "@memberof " + exportName(service),
-        "@static",
-        "@returns {string}"
-    ]);
-    push(escapeName(service.name) + ".CLASS_TYPE2 = function CLASS_TYPE2() {");
-        ++indent;
-        push("return " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
-        --indent;
-    push("};");
-
-
-
-
-
-    push("");
-    pushComment([
-        "@memberof " + exportName(service),
-        "@static"
-    ]);
-    push("get: " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
-
-
     
-
-
-
-
+    push("");
+    pushComment([
+        "@memberof " + exportName(service),
+        "@type {string}"
+    ]);
+    push(escapeName(service.name) + ".CLASS_TYPE = " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
 
     service.methodsArray.forEach(function(method) {
         method.resolve();
@@ -703,7 +678,7 @@ function buildService(ref, service) {
         ]);
         push(escapeName(service.name) + ".prototype" + util.safeProp(lcName) + " = function " + escapeName(lcName) + "(request, callback) {");
             ++indent;
-            push((config.es6 ? "const" : "var") + " methodName = " + escapeName(service.name) + ".CLASS_TYPE + \"/" + method.name + "\";");
+            push((config.es6 ? "const" : "var") + " methodName = " + escapeName(service.name) + ".prototype.CLASS_TYPE + \"/" + method.name + "\";");
             push("return this.rpcCall(" + escapeName(lcName) + ", $root." + exportName(method.resolvedRequestType) + ", $root."
                 + exportName(method.resolvedResponseType) + ", request, callback, methodName);");
             --indent;
