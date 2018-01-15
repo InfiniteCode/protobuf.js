@@ -391,7 +391,7 @@ function buildType(ref, type) {
         "@type {string}",
         "@static"
     ]);
-    push(escapeName(type.name) + ".CLASS_TYPE = \"" + exportName(type.parent) + "." + escapeName(type.name) + "\";");
+    push(escapeName(type.name) + ".prototype.CLASS_TYPE = \"" + exportName(type.parent) + "." + escapeName(type.name) + "\";");
 
     // default values
     var firstField = true;
@@ -642,7 +642,7 @@ function buildService(ref, service) {
         "@type {string}",
         "@static"
     ]);
-    push(escapeName(service.name) + ".CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
+    push(escapeName(service.name) + ".prototype.CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
 
     service.methodsArray.forEach(function(method) {
         method.resolve();

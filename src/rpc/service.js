@@ -83,7 +83,7 @@ Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, 
 
     var self = this;
     if (!callback)
-        return util.asPromise(rpcCall, self, method, requestCtor, responseCtor, request);
+        return util.asPromise(rpcCall, self, method, requestCtor, responseCtor, request, methodName);
 
     if (!self.rpcImpl) {
         setTimeout(function() { callback(Error("already ended")); }, 0);
