@@ -646,10 +646,9 @@ function buildService(ref, service) {
 
     push("");
     pushComment([
-        "@memberof " + exportName(service),
         "@type {string}"
     ]);
-    push((config.es6 ? "const" : "var") + " CLASS_TYPE = " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
+    push(escapeName(service.name) + ".CLASS_TYPE = " + escapeName(service.name) + ".prototype.CLASS_TYPE;");
 
     service.methodsArray.forEach(function(method) {
         method.resolve();
