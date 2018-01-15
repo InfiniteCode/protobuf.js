@@ -393,6 +393,20 @@ function buildType(ref, type) {
     ]);
     push(escapeName(type.name) + ".prototype.CLASS_TYPE = \"" + exportName(type.parent) + "." + escapeName(type.name) + "\";");
 
+    push("");
+    pushComment([
+        "@function getClassType",
+        "@memberof " + exportName(type),
+        "@static",
+        "@returns {string}"
+    ]);
+    push(escapeName(type.name) + ".getClassType = function getClassType() {");
+        ++indent;
+        push("return " + escapeName(type.name) + ".prototype.CLASS_TYPE;");
+        --indent;
+    push("};");
+
+
     // default values
     var firstField = true;
     type.fieldsArray.forEach(function(field) {
