@@ -385,6 +385,14 @@ function buildType(ref, type) {
     ]);
     buildFunction(type, type.name, Type.generateConstructor(type));
 
+    push("");
+    pushComment([
+        "Fully qualified class name, including parent namespaces and self.",
+        "@type {string}",
+        "@static"
+    ]);
+    push(escapeName(type.name) + ".CLASS_TYPE = \"" + exportName(type.parent) + "." + escapeName(type.name) + "\";");
+
     // default values
     var firstField = true;
     type.fieldsArray.forEach(function(field) {
@@ -663,8 +671,9 @@ function buildService(ref, service) {
         ]);
         push(escapeName(service.name) + ".prototype" + util.safeProp(lcName) + " = function " + escapeName(lcName) + "(request, callback) {");
             ++indent;
-            push((config.es6 ? "const" : "var") + " method = " + escapeName(service.name) + ".CLASS_TYPE + \"/" + method.name + "\";");
-            push("return this.rpcCall(" + escapeName(lcName) + ", $root." + exportName(method.resolvedRequestType) + ", $root." + exportName(method.resolvedResponseType) + ", request, callback);");
+            push((config.es6 ? "const" : "var") + " methodName = " + escapeName(service.name) + ".CLASS_TYPE + \"/" + method.name + "\";");
+            push("return this.rpcCall(" + escapeName(lcName) + ", $root." + exportName(method.resolvedRequestType) + ", $root."
+                + exportName(method.resolvedResponseType) + ", request, callback, methodName);");
             --indent;
         push("};");
         if (config.comments)
