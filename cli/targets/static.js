@@ -632,8 +632,8 @@ function buildService(ref, service) {
     pushComment([
         "Fully qualified class type, including parent namespaces."
     ]);
-    push(escapeName(service.name) + ".CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
-    
+    push(escapeName(service.name) + ".prototype.CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
+
     service.methodsArray.forEach(function(method) {
         method.resolve();
         var lcName = protobuf.util.lcFirst(method.name),
