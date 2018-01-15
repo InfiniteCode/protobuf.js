@@ -630,10 +630,9 @@ function buildService(ref, service) {
 
     push("");
     pushComment([
-        "Fully qualified class type, including parent namespaces.",
+        "Fully qualified class name, including parent namespaces and self.",
         "@const {string}",
-        "@static",
-        "@readonly"
+        "@static"
     ]);
     push(escapeName(service.name) + ".prototype.CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
 
