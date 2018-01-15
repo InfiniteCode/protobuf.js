@@ -647,14 +647,18 @@ function buildService(ref, service) {
 
 
     pushComment([
-        "@memberof " + escapeName(service.name),
+        "@memberof " + exportName(service.name),
         "@function CLASS_TYPE",
         "@static",
         "@returns {string}"
     ]);
-    push("function CLASS_TYPE { return \"" + exportName(service.parent) + "." + escapeName(service.name) + "\"; }");
+    push(escapeName(service.name) + ".CLASS_TYPE = function CLASS_TYPE() {");
+        ++indent;
+        push("return \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
+        --indent;
+    push("};");
 
-    
+
 
 
     service.methodsArray.forEach(function(method) {
