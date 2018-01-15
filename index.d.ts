@@ -1310,7 +1310,8 @@ export namespace rpc {
  * @param requestData Request data
  * @param callback Callback function
  */
-type RPCImpl = (method: (Method|rpc.ServiceMethod<Message<{}>, Message<{}>>), requestData: Uint8Array, callback: RPCImplCallback) => void;
+type RPCImpl = (method: (Method|rpc.ServiceMethod<Message<{}>, Message<{}>>), requestRaw: Message<{}>,
+                requestData: Uint8Array, callback: RPCImplCallback, methodName: string) => void;
 
 /**
  * Node-style callback as used by {@link RPCImpl}.

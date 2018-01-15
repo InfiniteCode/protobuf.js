@@ -76,7 +76,7 @@ function Service(rpcImpl, requestDelimited, responseDelimited) {
  * @template TReq extends Message<TReq>
  * @template TRes extends Message<TRes>
  */
-Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, request, callback) {
+Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, request, callback, methodName) {
 
     if (!request)
         throw TypeError("request must be specified");
@@ -93,6 +93,7 @@ Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, 
     try {
         return self.rpcImpl(
             method,
+            request,
             requestCtor[self.requestDelimited ? "encodeDelimited" : "encode"](request).finish(),
             function rpcCallback(err, response) {
 
@@ -117,7 +118,8 @@ Service.prototype.rpcCall = function rpcCall(method, requestCtor, responseCtor, 
 
                 self.emit("data", response, method);
                 return callback(null, response);
-            }
+            },
+            methodName
         );
     } catch (err) {
         self.emit("error", err, method);
