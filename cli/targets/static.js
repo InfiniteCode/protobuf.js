@@ -601,7 +601,6 @@ function buildService(ref, service) {
         "@param {boolean} [requestDelimited=false] Whether requests are length-delimited",
         "@param {boolean} [responseDelimited=false] Whether responses are length-delimited"
     ]);
-    push("var ServiceName = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";")
     push("function " + escapeName(service.name) + "(rpcImpl, requestDelimited, responseDelimited) {");
     ++indent;
     push("$protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);");
@@ -629,6 +628,12 @@ function buildService(ref, service) {
         push("};");
     }
 
+    push("");
+    pushComment([
+        "Fully qualified class type, including parent namespaces."
+    ]);
+    push(escapeName(service.name) + ".CLASS_TYPE = \"" + exportName(service.parent) + "." + escapeName(service.name) + "\";");
+    
     service.methodsArray.forEach(function(method) {
         method.resolve();
         var lcName = protobuf.util.lcFirst(method.name),
