@@ -222,7 +222,7 @@ var renameVars = {
     "util": "$util"
 };
 
-function buildFunction(type, functionName, gen, scope) {
+function buildFunction(type, functionName, gen, scope, includeKind) {
     var code = gen.toString(functionName)
         .replace(/((?!\.)types\[\d+])(\.values)/g, "$1"); // enums: use types[N] instead of reflected types[N].values
 
@@ -290,6 +290,9 @@ function buildFunction(type, functionName, gen, scope) {
     var lines = code.split(/\n/g);
     if (isCtor) // constructor
         push(lines[0]);
+    else if (includeKind)
+        push(escapeName(type.name) + "." + escapeName(functionName) + " = (function(" + Object.keys(scope).map(escapeName).join(", ") +
+            ") { var res = " + lines[0] + "; res.kind = \"" + includeKind + "\"; return res;");
     else if (hasScope) // enclose in an iife
         push(escapeName(type.name) + "." + escapeName(functionName) + " = (function(" + Object.keys(scope).map(escapeName).join(", ") + ") { return " + lines[0]);
     else
@@ -592,7 +595,7 @@ function buildType(ref, type) {
             "@param {$protobuf.IConversionOptions} [" + (config.beautify ? "options" : "o") + "] Conversion options",
             "@returns {Object.<string,*>} Plain object"
         ]);
-        buildFunction(type, "toObject", protobuf.converter.toObject(type));
+        buildFunction(type, "toObject", protobuf.converter.toObject(type), undefined, exportName(type.parent) + "." + escapeName(type.name));
 
         push("");
         pushComment([
@@ -604,9 +607,7 @@ function buildType(ref, type) {
         ]);
         push(escapeName(type.name) + ".prototype.toJSON = function toJSON() {");
         ++indent;
-            push("var res = this.constructor.toObject(this, $protobuf.util.toJSONOptions);");
-            push("res.kind = \"" + exportName(type.parent) + "." + escapeName(type.name) + "\"");
-            push("return res;");
+            push("return this.constructor.toObject(this, $protobuf.util.toJSONOptions);");
         --indent;
         push("};");
     }
