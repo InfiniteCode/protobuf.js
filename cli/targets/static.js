@@ -290,9 +290,6 @@ function buildFunction(type, functionName, gen, scope, includeKind) {
     var lines = code.split(/\n/g);
     if (isCtor) // constructor
         push(lines[0]);
-    else if (hasScope && includeKind && includeKind.length > 0)
-        push(escapeName(type.name) + "." + escapeName(functionName) + " = (function(" + Object.keys(scope).map(escapeName).join(", ") +
-            ") { var res = " + lines[0] + "; return res;");
     else if (hasScope) // enclose in an iife
         push(escapeName(type.name) + "." + escapeName(functionName) + " = (function(" + Object.keys(scope).map(escapeName).join(", ") + ") { return " + lines[0]);
     else
@@ -306,11 +303,11 @@ function buildFunction(type, functionName, gen, scope, includeKind) {
         indent = prev;
     });
     if (isCtor)
-        push("}");
+        push("}/*1-ctor*/");
     else if (hasScope)
-        push("};})(" + Object.keys(scope).map(function(key) { return scope[key]; }).join(", ") + ");");
+        push("};})(" + Object.keys(scope).map(function(key) { return scope[key]; }).join(", ") + ");/*2-scope*/");
     else
-        push("};");
+        push("};/*3*/");
 }
 
 function toJsType(field) {
