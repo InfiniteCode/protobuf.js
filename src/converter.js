@@ -199,7 +199,7 @@ converter.toObject = function toObject(mtype, objectKind) {
     /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
     var fields = mtype.fieldsArray.slice().sort(util.compareFieldsById);
     if (!fields.length)
-        return util.codegen()("var a = 5; return {}");
+        return util.codegen()(objectKind && objectKind.length > 0 ? "return { kind: \"" + objectKind + "\" }" : "return {}");
     var gen = util.codegen(["m", "o"], mtype.name + "$toObject")
     ("if(!o)")
         ("o={}")
