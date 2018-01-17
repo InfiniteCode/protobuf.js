@@ -281,8 +281,8 @@ converter.toObject = function toObject(mtype, objectKind) {
         gen
     ("}");
     }
-    
+
     return gen
-    (objectKind && objectKind.length > 0 ? "var res = d; d.kind = \"" + objectKind + "\"; return res;" : "return d");
+    (objectKind && objectKind.length > 0 ? "d.kind = \"" + objectKind + "\"; return d;" : "return d");
     /* eslint-enable no-unexpected-multiline, block-scoped-var, no-redeclare */
 };
