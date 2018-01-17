@@ -604,7 +604,9 @@ function buildType(ref, type) {
         ]);
         push(escapeName(type.name) + ".prototype.toJSON = function toJSON() {");
         ++indent;
-            push("return this.constructor.toObject(this, $protobuf.util.toJSONOptions);");
+            push("var res = this.constructor.toObject(this, $protobuf.util.toJSONOptions);");
+            push("res.kind = \"" + exportName(type.parent) + "." + escapeName(type.name) + "\"");
+            push("return res;");
         --indent;
         push("};");
     }
