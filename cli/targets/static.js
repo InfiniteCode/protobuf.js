@@ -290,7 +290,7 @@ function buildFunction(type, functionName, gen, scope, includeKind) {
     var lines = code.split(/\n/g);
     if (isCtor) // constructor
         push(lines[0]);
-    else if (hasScopr && includeKind && includeKind.length > 0)
+    else if (hasScope && includeKind && includeKind.length > 0)
         push(escapeName(type.name) + "." + escapeName(functionName) + " = (function(" + Object.keys(scope).map(escapeName).join(", ") +
             ") { var res = " + lines[0] + "; return res;");
     else if (hasScope) // enclose in an iife
