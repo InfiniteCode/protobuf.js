@@ -303,11 +303,11 @@ function buildFunction(type, functionName, gen, scope, includeKind) {
         indent = prev;
     });
     if (isCtor)
-        push("}/*1-ctor*/");
+        push("}");
     else if (hasScope)
-        push("};})(" + Object.keys(scope).map(function(key) { return scope[key]; }).join(", ") + ");/*2-scope*/");
+        push("};})(" + Object.keys(scope).map(function(key) { return scope[key]; }).join(", ") + ");");
     else
-        push("};/*3*/");
+        push("};");
 }
 
 function toJsType(field) {
@@ -592,7 +592,7 @@ function buildType(ref, type) {
             "@param {$protobuf.IConversionOptions} [" + (config.beautify ? "options" : "o") + "] Conversion options",
             "@returns {Object.<string,*>} Plain object"
         ]);
-        buildFunction(type, "toObject", protobuf.converter.toObject(type), undefined, exportName(type.parent) + "." + escapeName(type.name));
+        buildFunction(type, "toObject", protobuf.converter.toObject(type, exportName(type.parent) + "." + escapeName(type.name)));
 
         push("");
         pushComment([

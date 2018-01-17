@@ -1304,7 +1304,7 @@ function genValuePartial_toObject(gen, field, fieldIndex, prop) {
  * @param {Type} mtype Message type
  * @returns {Codegen} Codegen instance
  */
-converter.toObject = function toObject(mtype) {
+converter.toObject = function toObject(mtype, objectKind) {
     /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
     var fields = mtype.fieldsArray.slice().sort(util.compareFieldsById);
     if (!fields.length)
@@ -1391,7 +1391,7 @@ converter.toObject = function toObject(mtype) {
     ("}");
     }
     return gen
-    ("return d");
+    ("return d/*===*/");
     /* eslint-enable no-unexpected-multiline, block-scoped-var, no-redeclare */
 };
 

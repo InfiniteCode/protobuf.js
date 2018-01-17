@@ -130,7 +130,7 @@ export namespace converter {
      * @param mtype Message type
      * @returns Codegen instance
      */
-    function toObject(mtype: Type): Codegen;
+    function toObject(mtype: Type, kind: string): Codegen;
 }
 
 /**
